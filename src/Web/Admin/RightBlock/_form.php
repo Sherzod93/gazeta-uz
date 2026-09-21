@@ -20,14 +20,34 @@ $formAction = $itemId === null
     : $urlGenerator->generate('admin/right-block/edit', ['id' => (string) $itemId]);
 ?>
 
-<form method="post" action="<?= Html::encode($formAction) ?>">
+<form method="post" action="<?= Html::encode($formAction) ?>" enctype="multipart/form-data">
     <?= $csrf->hiddenInput() ?>
 
     <div class="admin-form-row">
         <label for="logo">Логотип</label>
-        <input type="text" id="logo" name="logo" value="<?= Html::encode($input->logo) ?>" required>
+        <?php if ($input->logo !== ''): ?>
+            <div class="admin-form-current-image">
+                <img src="<?= Html::encode($input->logo) ?>" alt="" width="120">
+                <span>Текущий логотип. Загрузите новый файл, чтобы заменить его.</span>
+            </div>
+        <?php endif; ?>
+        <input type="file" id="logo" name="logo" accept="image/jpeg,image/png,image/webp,image/gif">
         <?php if (isset($errors['logo'])): ?>
             <div class="admin-form-error"><?= Html::encode($errors['logo']) ?></div>
+        <?php endif; ?>
+    </div>
+
+    <div class="admin-form-row">
+        <label for="background_image">Фоновое изображение</label>
+        <?php if ($input->backgroundImage !== null): ?>
+            <div class="admin-form-current-image">
+                <img src="<?= Html::encode($input->backgroundImage) ?>" alt="" width="200">
+                <span>Текущий фон. Загрузите новый файл, чтобы заменить его.</span>
+            </div>
+        <?php endif; ?>
+        <input type="file" id="background_image" name="background_image" accept="image/jpeg,image/png,image/webp,image/gif">
+        <?php if (isset($errors['backgroundImage'])): ?>
+            <div class="admin-form-error"><?= Html::encode($errors['backgroundImage']) ?></div>
         <?php endif; ?>
     </div>
 

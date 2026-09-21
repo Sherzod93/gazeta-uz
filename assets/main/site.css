@@ -610,14 +610,34 @@ a.site-aside__promo {
     background:
         radial-gradient(circle at 50% 30%, rgba(125, 100, 70, .5), transparent 60%),
         linear-gradient(160deg, #241c16 0%, #3b2e22 55%, #181310 100%);
+    background-size: cover;
+    background-position: center;
+}
+
+/* Darkens the admin-uploaded background photo so the white text stays readable. */
+a.site-aside__promo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 30%, rgba(125, 100, 70, .35), transparent 60%),
+        linear-gradient(160deg, rgba(36, 28, 22, .85) 0%, rgba(59, 46, 34, .65) 55%, rgba(24, 19, 16, .5) 100%);
+}
+
+.site-aside__promo-logo,
+.site-aside__promo-title,
+.site-aside__promo-subtitle,
+.site-aside__promo-cta {
+    position: relative;
+    z-index: 1;
 }
 
 .site-aside__promo-logo {
     position: absolute;
     top: 16px;
     right: 18px;
-    font-size: 14px;
-    font-weight: 700;
+    height: 18px;
+    width: auto;
     opacity: .85;
 }
 

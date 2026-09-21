@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Web\Admin\RightBlock\Edit;
 
+use App\Admin\Content\ContentImageUploader;
+use App\Admin\Content\InvalidContentImageException;
 use App\RightBlocks\RightBlock;
 use App\RightBlocks\RightBlockInput;
 use App\RightBlocks\RightBlockRepository;
@@ -24,6 +26,7 @@ final readonly class Action
         private WebViewRenderer $viewRenderer,
         private RightBlockRepository $rightBlockRepository,
         private RightBlockValidator $rightBlockValidator,
+        private ContentImageUploader $contentImageUploader,
         private CurrentRoute $currentRoute,
         private RequestProviderInterface $requestProvider,
         private NotFoundHandler $notFoundHandler,
@@ -45,7 +48,31 @@ final readonly class Action
             return $this->render($item->id, $this->toInput($item));
         }
 
-        $input = RightBlockInput::fromRequestBody((array) $request->getParsedBody());
+        $body = (array) $request->getParsedBody();
+        $uploadedFiles = $request->getUploadedFiles();
+
+        try {
+            $logo = $this->contentImageUploader->upload($uploadedFiles['logo'] ?? null);
+        } catch (InvalidContentImageException $e) {
+            $body['logo'] = $item->logo;
+            $body['background_image'] = $item->backgroundImage;
+
+            return $this->render($item->id, RightBlockInput::fromRequestBody($body), ['logo' => $e->getMessage()]);
+        }
+
+        try {
+            $backgroundImage = $this->contentImageUploader->upload($uploadedFiles['background_image'] ?? null);
+        } catch (InvalidContentImageException $e) {
+            $body['logo'] = $logo ?? $item->logo;
+            $body['background_image'] = $item->backgroundImage;
+
+            return $this->render($item->id, RightBlockInput::fromRequestBody($body), ['backgroundImage' => $e->getMessage()]);
+        }
+
+        $body['logo'] = $logo ?? $item->logo;
+        $body['background_image'] = $backgroundImage ?? $item->backgroundImage;
+
+        $input = RightBlockInput::fromRequestBody($body);
         $errors = $this->rightBlockValidator->validate($input);
 
         if ($errors !== []) {
@@ -63,6 +90,7 @@ final readonly class Action
     {
         return new RightBlockInput(
             logo: $item->logo,
+            backgroundImage: $item->backgroundImage,
             title: $item->title,
             subtitle: $item->subtitle,
             ctaText: $item->ctaText,

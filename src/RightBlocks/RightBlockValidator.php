@@ -14,7 +14,11 @@ final readonly class RightBlockValidator
         $errors = [];
 
         if ($input->logo === '') {
-            $errors['logo'] = 'Введите текст логотипа.';
+            $errors['logo'] = 'Загрузите изображение логотипа.';
+        }
+
+        if ($input->backgroundImage === null) {
+            $errors['backgroundImage'] = 'Загрузите фоновое изображение.';
         }
 
         if ($input->title === '') {

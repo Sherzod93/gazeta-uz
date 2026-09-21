@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Web\Admin\RightBlock\Create;
 
+use App\Admin\Content\ContentImageUploader;
+use App\Admin\Content\InvalidContentImageException;
 use App\RightBlocks\RightBlockInput;
 use App\RightBlocks\RightBlockRepository;
 use App\RightBlocks\RightBlockValidator;
@@ -21,6 +23,7 @@ final readonly class Action
         private WebViewRenderer $viewRenderer,
         private RightBlockRepository $rightBlockRepository,
         private RightBlockValidator $rightBlockValidator,
+        private ContentImageUploader $contentImageUploader,
         private RequestProviderInterface $requestProvider,
         private ResponseFactoryInterface $responseFactory,
         private UrlGeneratorInterface $urlGenerator,
@@ -34,7 +37,30 @@ final readonly class Action
             return $this->render(new RightBlockInput());
         }
 
-        $input = RightBlockInput::fromRequestBody((array) $request->getParsedBody());
+        $body = (array) $request->getParsedBody();
+        $uploadedFiles = $request->getUploadedFiles();
+
+        try {
+            $logo = $this->contentImageUploader->upload($uploadedFiles['logo'] ?? null);
+        } catch (InvalidContentImageException $e) {
+            return $this->render(RightBlockInput::fromRequestBody($body), ['logo' => $e->getMessage()]);
+        }
+
+        try {
+            $backgroundImage = $this->contentImageUploader->upload($uploadedFiles['background_image'] ?? null);
+        } catch (InvalidContentImageException $e) {
+            return $this->render(RightBlockInput::fromRequestBody($body), ['backgroundImage' => $e->getMessage()]);
+        }
+
+        if ($logo !== null) {
+            $body['logo'] = $logo;
+        }
+
+        if ($backgroundImage !== null) {
+            $body['background_image'] = $backgroundImage;
+        }
+
+        $input = RightBlockInput::fromRequestBody($body);
         $errors = $this->rightBlockValidator->validate($input);
 
         if ($errors !== []) {

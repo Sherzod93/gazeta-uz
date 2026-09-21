@@ -33,8 +33,12 @@ use Yiisoft\Router\UrlGeneratorInterface;
     <?php endif; ?>
 
     <?php if ($rightBlock !== null): ?>
-        <a class="site-aside__promo" href="<?= Html::encode($rightBlock->ctaHref ?? '#') ?>">
-            <span class="site-aside__promo-logo"><?= Html::encode($rightBlock->logo) ?></span>
+        <a
+            class="site-aside__promo"
+            href="<?= Html::encode($rightBlock->ctaHref ?? '#') ?>"
+            <?= $rightBlock->backgroundImage !== null ? 'style="background-image:url(\'' . Html::encode($rightBlock->backgroundImage) . '\')"' : '' ?>
+        >
+            <img class="site-aside__promo-logo" src="<?= Html::encode($rightBlock->logo) ?>" alt="<?= Html::encode($rightBlock->title) ?>">
             <span class="site-aside__promo-title"><?= Html::encode($rightBlock->title) ?></span>
             <?php if ($rightBlock->subtitle !== null): ?>
                 <span class="site-aside__promo-subtitle"><?= Html::encode($rightBlock->subtitle) ?></span>

@@ -82,6 +82,7 @@ final readonly class RightBlockRepository
     {
         return [
             'logo' => $input->logo,
+            'background_image' => $input->backgroundImage,
             'title' => $input->title,
             'subtitle' => $input->subtitle,
             'cta_text' => $input->ctaText,

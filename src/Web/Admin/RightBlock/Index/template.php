@@ -32,6 +32,7 @@ $this->setTitle('Правый блок');
             <tr>
                 <th>Заголовок</th>
                 <th>Логотип</th>
+                <th>Фон</th>
                 <th></th>
             </tr>
             </thead>
@@ -39,7 +40,8 @@ $this->setTitle('Правый блок');
             <?php foreach ($items as $item): ?>
                 <tr>
                     <td><?= Html::encode($item->title) ?></td>
-                    <td><?= Html::encode($item->logo) ?></td>
+                    <td><img src="<?= Html::encode($item->logo) ?>" alt="" width="60"></td>
+                    <td><?php if ($item->backgroundImage !== null): ?><img src="<?= Html::encode($item->backgroundImage) ?>" alt="" width="100"><?php endif; ?></td>
                     <td>
                         <div class="admin-table__actions">
                             <a class="admin-btn admin-btn--ghost" href="<?= Html::encode($urlGenerator->generate('admin/right-block/edit', ['id' => (string) $item->id])) ?>">Изменить</a>
