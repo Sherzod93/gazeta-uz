@@ -36,4 +36,19 @@ final readonly class ArticleRepository
 
         return $row === null ? null : Article::fromArray($row);
     }
+
+    /**
+     * @return Article[]
+     */
+    public function findByCategory(int $categoryId, int $limit = 20): array
+    {
+        $rows = (new Query($this->db))
+            ->from('articles')
+            ->where(['category_id' => $categoryId])
+            ->orderBy(['published_at' => SORT_DESC])
+            ->limit($limit)
+            ->all();
+
+        return array_map(Article::fromArray(...), $rows);
+    }
 }

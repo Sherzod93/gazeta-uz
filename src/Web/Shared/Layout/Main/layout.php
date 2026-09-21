@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Categories\Category;
 use App\Web\Shared\Layout\Main\MainAsset;
 use Yiisoft\Html\Html;
 
@@ -14,6 +15,7 @@ use Yiisoft\Html\Html;
  * @var Yiisoft\View\WebView $this
  * @var Yiisoft\Router\CurrentRoute $currentRoute
  * @var Yiisoft\Router\UrlGeneratorInterface $urlGenerator
+ * @var Category[] $categories
  */
 
 $assetManager->register(MainAsset::class);
@@ -50,12 +52,12 @@ $this->beginPage()
         </a>
 
         <nav class="site-nav" aria-label="Categories">
-            <a href="#">Политика</a>
-            <a href="#">Экономика</a>
-            <a href="#">Общество</a>
-            <a href="#">Культура</a>
-            <a href="#">Мир</a>
-            <a href="#">Колонки</a>
+            <?php foreach ($categories as $category): ?>
+                <a
+                    href="<?= Html::encode($urlGenerator->generate('category/index', ['slug' => $category->slug])) ?>"
+                    class="<?= $currentRoute->getName() === 'category/index' && $currentRoute->getArgument('slug') === $category->slug ? 'is-active' : '' ?>"
+                ><?= Html::encode($category->name) ?></a>
+            <?php endforeach; ?>
         </nav>
 
         <div class="site-header__tools">

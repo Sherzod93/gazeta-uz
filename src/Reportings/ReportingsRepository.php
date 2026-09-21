@@ -36,4 +36,19 @@ final readonly class ReportingsRepository
 
         return $row === null ? null : Reportings::fromArray($row);
     }
+
+    /**
+     * @return Reportings[]
+     */
+    public function findByCategory(int $categoryId, int $limit = 20): array
+    {
+        $rows = (new Query($this->db))
+            ->from('reportings')
+            ->where(['category_id' => $categoryId])
+            ->orderBy(['published_at' => SORT_DESC])
+            ->limit($limit)
+            ->all();
+
+        return array_map(Reportings::fromArray(...), $rows);
+    }
 }

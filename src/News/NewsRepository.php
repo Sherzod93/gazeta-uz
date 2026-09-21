@@ -36,4 +36,19 @@ final readonly class NewsRepository
 
         return $row === null ? null : News::fromArray($row);
     }
+
+    /**
+     * @return News[]
+     */
+    public function findByCategory(int $categoryId, int $limit = 20): array
+    {
+        $rows = (new Query($this->db))
+            ->from('news')
+            ->where(['category_id' => $categoryId])
+            ->orderBy(['published_at' => SORT_DESC])
+            ->limit($limit)
+            ->all();
+
+        return array_map(News::fromArray(...), $rows);
+    }
 }

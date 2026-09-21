@@ -486,6 +486,13 @@ a.site-banner__cta:hover {
 
 /* News list page */
 
+.category-page__title {
+    margin: 0 0 20px;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
 .news-page-grid {
     display: grid;
     grid-template-columns: 1fr 320px;

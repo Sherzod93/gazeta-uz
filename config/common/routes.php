@@ -31,6 +31,9 @@ return [
             Route::get('/articles/{slug}')
                 ->action(Web\Articles\View\Action::class)
                 ->name('articles/view'),
+            Route::get('/category/{slug}')
+                ->action(Web\Category\Index\Action::class)
+                ->name('category/index'),
         ),
 
     Group::create('/admin')
