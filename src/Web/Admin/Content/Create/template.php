@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Admin\Content\ContentInput;
 use App\Admin\Content\ContentType;
+use App\Categories\Category;
 use Yiisoft\Html\Html;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\View\WebView;
@@ -17,6 +18,7 @@ use Yiisoft\Yii\View\Renderer\Csrf;
  * @var ContentInput $input
  * @var array<string, string> $errors
  * @var int|null $itemId
+ * @var Category[] $categories
  */
 
 $this->setTitle('Новый материал — ' . $type->label());

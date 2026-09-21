@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Shared\ApplicationParams;
+use App\Web\Shared\Layout\RandomBlocksViewInjection;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Assets\AssetManager;
 use Yiisoft\Definitions\Reference;
@@ -35,6 +36,7 @@ return [
         'layout' => '@src/Web/Shared/Layout/Main/layout.php',
         'injections' => [
             Reference::to(CsrfViewInjection::class),
+            Reference::to(RandomBlocksViewInjection::class),
         ],
     ],
 

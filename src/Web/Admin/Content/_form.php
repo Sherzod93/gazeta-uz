@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Admin\Content\ContentInput;
 use App\Admin\Content\ContentType;
+use App\Categories\Category;
 use Yiisoft\Html\Html;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Yii\View\Renderer\Csrf;
@@ -15,6 +16,7 @@ use Yiisoft\Yii\View\Renderer\Csrf;
  * @var ContentInput $input
  * @var array<string, string> $errors
  * @var int|null $itemId
+ * @var Category[] $categories
  */
 
 $formAction = $itemId === null
@@ -68,6 +70,21 @@ $formAction = $itemId === null
         <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp,image/gif">
         <?php if (isset($errors['image'])): ?>
             <div class="admin-form-error"><?= Html::encode($errors['image']) ?></div>
+        <?php endif; ?>
+    </div>
+
+    <div class="admin-form-row">
+        <label for="category_id">Категория</label>
+        <select id="category_id" name="category_id" required>
+            <option value="">Выберите категорию</option>
+            <?php foreach ($categories as $category): ?>
+                <option value="<?= $category->id ?>" <?= $input->categoryId === $category->id ? 'selected' : '' ?>>
+                    <?= Html::encode($category->name) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <?php if (isset($errors['categoryId'])): ?>
+            <div class="admin-form-error"><?= Html::encode($errors['categoryId']) ?></div>
         <?php endif; ?>
     </div>
 

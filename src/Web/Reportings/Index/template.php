@@ -18,9 +18,6 @@ use Yiisoft\View\WebView;
 
 $this->setTitle('Репортажи');
 
-$bannerLogo = 'gazeta';
-$bannerTitle = 'Репортажи';
-$bannerSubtitle = 'Расследования и репортажи из первых рук';
 require __DIR__ . '/../../Shared/Layout/Partial/Banner.php';
 
 $activeTab = 'reporting';

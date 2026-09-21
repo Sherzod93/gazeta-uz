@@ -15,11 +15,6 @@ use Yiisoft\Router\UrlGeneratorInterface;
  * @var string $activeTab One of 'home', 'news', 'articles', 'reporting', 'media'.
  */
 
-$bannerLogo = 'gazeta';
-$bannerTitle = 'Книжная полка';
-$bannerSubtitle = 'писателя, автора романа «Катехон» Евгения Абдуллаева';
-$bannerCtaText = 'читать';
-$bannerCtaHref = '#';
 ?>
 
     <?php require __DIR__ . '/Banner.php'; ?>

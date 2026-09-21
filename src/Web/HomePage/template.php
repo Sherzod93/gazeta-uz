@@ -20,9 +20,6 @@ use Yiisoft\View\WebView;
 
 $this->setTitle($applicationParams->name);
 
-$bannerLogo = 'Afisha';
-$bannerTitle = 'Лучшие события Ташкента';
-$bannerSubtitle = 'Обзор и билеты';
 require __DIR__ . '/../Shared/Layout/Partial/Banner.php';
 
 $activeTab = 'home';

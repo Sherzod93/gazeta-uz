@@ -2,29 +2,27 @@
 
 declare(strict_types=1);
 
+use App\Banners\Banner;
 use Yiisoft\Html\Html;
 
 /**
- * Shared top banner, rendered the same way on every page.
+ * Shared top banner, rendered the same way on every page. The banner shown is picked at random
+ * (from the admin-managed list) on every page load by {@see \App\Web\Shared\Layout\RandomBlocksViewInjection}.
  *
- * @var string $bannerLogo
- * @var string $bannerTitle
- * @var string|null $bannerSubtitle
- * @var string|null $bannerCtaText
- * @var string|null $bannerCtaHref
+ * @var Banner|null $banner
  */
 
-$bannerSubtitle ??= null;
-$bannerCtaText ??= null;
-$bannerCtaHref ??= null;
+if ($banner === null) {
+    return;
+}
 ?>
 <section class="site-banner">
-    <span class="site-banner__logo"><?= Html::encode($bannerLogo) ?></span>
-    <p class="site-banner__title"><?= Html::encode($bannerTitle) ?></p>
-    <?php if ($bannerSubtitle !== null): ?>
-        <p class="site-banner__subtitle"><?= Html::encode($bannerSubtitle) ?></p>
+    <span class="site-banner__logo"><?= Html::encode($banner->logo) ?></span>
+    <p class="site-banner__title"><?= Html::encode($banner->title) ?></p>
+    <?php if ($banner->subtitle !== null): ?>
+        <p class="site-banner__subtitle"><?= Html::encode($banner->subtitle) ?></p>
     <?php endif; ?>
-    <?php if ($bannerCtaText !== null): ?>
-        <a class="site-banner__cta" href="<?= Html::encode($bannerCtaHref ?? '#') ?>"><?= Html::encode($bannerCtaText) ?></a>
+    <?php if ($banner->ctaText !== null): ?>
+        <a class="site-banner__cta" href="<?= Html::encode($banner->ctaHref ?? '#') ?>"><?= Html::encode($banner->ctaText) ?></a>
     <?php endif; ?>
 </section>

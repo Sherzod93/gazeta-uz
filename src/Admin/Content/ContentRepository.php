@@ -88,6 +88,7 @@ final readonly class ContentRepository
             'content' => $input->content,
             'image' => $input->image,
             'published_at' => $publishedAt->format('Y-m-d H:i:s'),
+            'category_id' => $input->categoryId,
             'updated_at' => $now->format('Y-m-d H:i:s'),
         ];
     }

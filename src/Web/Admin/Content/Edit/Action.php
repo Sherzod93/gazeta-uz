@@ -11,6 +11,7 @@ use App\Admin\Content\ContentRepository;
 use App\Admin\Content\ContentType;
 use App\Admin\Content\ContentValidator;
 use App\Admin\Content\InvalidContentImageException;
+use App\Categories\CategoryRepository;
 use App\Web\NotFound\NotFoundHandler;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -28,6 +29,7 @@ final readonly class Action
         private ContentRepository $contentRepository,
         private ContentValidator $contentValidator,
         private ContentImageUploader $contentImageUploader,
+        private CategoryRepository $categoryRepository,
         private CurrentRoute $currentRoute,
         private RequestProviderInterface $requestProvider,
         private NotFoundHandler $notFoundHandler,
@@ -85,6 +87,7 @@ final readonly class Action
             content: $item->content,
             image: $item->image,
             publishedAt: $item->publishedAt->format(ContentInput::DATETIME_FORMAT),
+            categoryId: $item->categoryId,
         );
     }
 
@@ -100,6 +103,7 @@ final readonly class Action
                 'input' => $input,
                 'errors' => $errors,
                 'itemId' => $itemId,
+                'categories' => $this->categoryRepository->findAll(),
             ]);
     }
 }

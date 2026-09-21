@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Admin\Content;
 
+use App\Categories\CategoryRepository;
 use DateTimeImmutable;
 
 final readonly class ContentValidator
 {
     public function __construct(
         private ContentRepository $repository,
+        private CategoryRepository $categoryRepository,
     ) {}
 
     /**
@@ -43,6 +45,12 @@ final readonly class ContentValidator
             $errors['publishedAt'] = 'Укажите дату публикации.';
         } elseif (DateTimeImmutable::createFromFormat(ContentInput::DATETIME_FORMAT, $input->publishedAt) === false) {
             $errors['publishedAt'] = 'Некорректная дата публикации.';
+        }
+
+        if ($input->categoryId === null) {
+            $errors['categoryId'] = 'Выберите категорию.';
+        } elseif ($this->categoryRepository->findById($input->categoryId) === null) {
+            $errors['categoryId'] = 'Выбранная категория не найдена.';
         }
 
         return $errors;

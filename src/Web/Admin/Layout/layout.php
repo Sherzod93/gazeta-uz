@@ -50,6 +50,10 @@ $this->beginPage()
                class="<?= $activeRoute === 'admin/content/index' && $currentRoute->getArgument('type') === 'reportings' ? 'is-active' : '' ?>">Репортажи</a>
             <a href="<?= Html::encode($urlGenerator->generate('admin/content/index', ['type' => 'articles'])) ?>"
                class="<?= $activeRoute === 'admin/content/index' && $currentRoute->getArgument('type') === 'articles' ? 'is-active' : '' ?>">Статьи</a>
+            <a href="<?= Html::encode($urlGenerator->generate('admin/banner/index')) ?>"
+               class="<?= str_starts_with((string) $activeRoute, 'admin/banner/') ? 'is-active' : '' ?>">Баннеры</a>
+            <a href="<?= Html::encode($urlGenerator->generate('admin/right-block/index')) ?>"
+               class="<?= str_starts_with((string) $activeRoute, 'admin/right-block/') ? 'is-active' : '' ?>">Правый блок</a>
         </nav>
 
         <form method="post" action="<?= Html::encode($urlGenerator->generate('admin/logout')) ?>">

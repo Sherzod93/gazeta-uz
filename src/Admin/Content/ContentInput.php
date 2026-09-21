@@ -15,6 +15,7 @@ final readonly class ContentInput
         public string $content = '',
         public ?string $image = null,
         public string $publishedAt = '',
+        public ?int $categoryId = null,
     ) {}
 
     /**
@@ -23,6 +24,7 @@ final readonly class ContentInput
     public static function fromRequestBody(array $body): self
     {
         $image = trim((string) ($body['image'] ?? ''));
+        $categoryId = trim((string) ($body['category_id'] ?? ''));
 
         return new self(
             title: trim((string) ($body['title'] ?? '')),
@@ -31,6 +33,7 @@ final readonly class ContentInput
             content: trim((string) ($body['content'] ?? '')),
             image: $image === '' ? null : $image,
             publishedAt: trim((string) ($body['published_at'] ?? '')),
+            categoryId: $categoryId === '' ? null : (int) $categoryId,
         );
     }
 }

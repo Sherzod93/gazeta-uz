@@ -16,6 +16,7 @@ final readonly class ContentItem
         public string $content,
         public ?string $image,
         public DateTimeImmutable $publishedAt,
+        public ?int $categoryId,
     ) {}
 
     /**
@@ -31,6 +32,7 @@ final readonly class ContentItem
             content: (string) $row['content'],
             image: $row['image'] === null ? null : (string) $row['image'],
             publishedAt: new DateTimeImmutable((string) $row['published_at']),
+            categoryId: $row['category_id'] === null ? null : (int) $row['category_id'],
         );
     }
 }

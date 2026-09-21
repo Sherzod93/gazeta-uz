@@ -16,6 +16,7 @@ use Yiisoft\Yii\View\Renderer\Csrf;
  * @var Csrf $csrf
  * @var ContentType $type
  * @var ContentItem[] $items
+ * @var array<int, string> $categoryNames
  */
 
 $this->setTitle($type->label());
@@ -34,6 +35,7 @@ $this->setTitle($type->label());
             <thead>
             <tr>
                 <th>Заголовок</th>
+                <th>Категория</th>
                 <th>Дата публикации</th>
                 <th></th>
             </tr>
@@ -42,6 +44,7 @@ $this->setTitle($type->label());
             <?php foreach ($items as $item): ?>
                 <tr>
                     <td><?= Html::encode($item->title) ?></td>
+                    <td><?= Html::encode($item->categoryId !== null ? ($categoryNames[$item->categoryId] ?? '') : '') ?></td>
                     <td><?= Html::encode(RussianDate::dateTime($item->publishedAt)) ?></td>
                     <td>
                         <div class="admin-table__actions">

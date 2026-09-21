@@ -29,5 +29,7 @@ $this->setTitle('Панель управления');
                 <?= Html::encode($type->label()) ?>
             </a>
         <?php endforeach; ?>
+        <a class="admin-btn" href="<?= Html::encode($urlGenerator->generate('admin/banner/index')) ?>">Баннеры</a>
+        <a class="admin-btn" href="<?= Html::encode($urlGenerator->generate('admin/right-block/index')) ?>">Правый блок</a>
     </div>
 </div>

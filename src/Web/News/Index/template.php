@@ -18,9 +18,6 @@ use Yiisoft\View\WebView;
 
 $this->setTitle('Новости');
 
-$bannerLogo = 'spot.';
-$bannerTitle = 'Деловые новости Узбекистана';
-$bannerSubtitle = 'Бизнес, технологии, экономика — www.spot.uz';
 require __DIR__ . '/../../Shared/Layout/Partial/Banner.php';
 
 $activeTab = 'news';

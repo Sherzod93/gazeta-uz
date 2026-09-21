@@ -2,15 +2,18 @@
 
 declare(strict_types=1);
 
+use App\RightBlocks\RightBlock;
 use App\Web\Shared\Article\AsideItem;
 use Yiisoft\Html\Html;
 use Yiisoft\Router\UrlGeneratorInterface;
 
 /**
- * Shared right-side block, rendered the same way on every page.
+ * Shared right-side block, rendered the same way on every page. The promo box shown is picked at random
+ * (from the admin-managed list) on every page load by {@see \App\Web\Shared\Layout\RandomBlocksViewInjection}.
  *
  * @var UrlGeneratorInterface $urlGenerator
  * @var AsideItem[] $asideItems
+ * @var RightBlock|null $rightBlock
  */
 ?>
 <aside class="site-aside">
@@ -29,12 +32,18 @@ use Yiisoft\Router\UrlGeneratorInterface;
         </div>
     <?php endif; ?>
 
-    <a class="site-aside__promo" href="#">
-        <span class="site-aside__promo-logo">gazeta</span>
-        <span class="site-aside__promo-title">Книжная полка</span>
-        <span class="site-aside__promo-subtitle">писателя, автора романа «Катехон» Евгения Абдуллаева</span>
-        <span class="site-aside__promo-cta">читать</span>
-    </a>
+    <?php if ($rightBlock !== null): ?>
+        <a class="site-aside__promo" href="<?= Html::encode($rightBlock->ctaHref ?? '#') ?>">
+            <span class="site-aside__promo-logo"><?= Html::encode($rightBlock->logo) ?></span>
+            <span class="site-aside__promo-title"><?= Html::encode($rightBlock->title) ?></span>
+            <?php if ($rightBlock->subtitle !== null): ?>
+                <span class="site-aside__promo-subtitle"><?= Html::encode($rightBlock->subtitle) ?></span>
+            <?php endif; ?>
+            <?php if ($rightBlock->ctaText !== null): ?>
+                <span class="site-aside__promo-cta"><?= Html::encode($rightBlock->ctaText) ?></span>
+            <?php endif; ?>
+        </a>
+    <?php endif; ?>
 
     <div class="site-aside__links">
         <a href="#">Реклама</a>
