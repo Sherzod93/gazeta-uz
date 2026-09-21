@@ -21,6 +21,9 @@ use Yiisoft\View\WebView;
 $this->setTitle($category->name);
 
 require __DIR__ . '/../../Shared/Layout/Partial/Banner.php';
+
+$activeTab = '';
+require __DIR__ . '/../../Shared/Layout/Partial/SubNav.php';
 ?>
 
 <h1 class="category-page__title"><?= Html::encode($category->name) ?></h1>
