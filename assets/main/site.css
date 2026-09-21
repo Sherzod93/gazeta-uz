@@ -173,6 +173,26 @@ a {
     background:
         radial-gradient(circle at 78% 55%, rgba(120, 96, 68, .55), transparent 55%),
         linear-gradient(105deg, #1a1512 0%, #2f251c 55%, #4b3a2a 100%);
+    background-size: cover;
+    background-position: center;
+}
+
+/* Darkens the admin-uploaded background photo so the white text stays readable. */
+.site-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 78% 55%, rgba(120, 96, 68, .35), transparent 55%),
+        linear-gradient(105deg, rgba(26, 21, 18, .85) 0%, rgba(47, 37, 28, .6) 55%, rgba(75, 58, 42, .35) 100%);
+}
+
+.site-banner__logo,
+.site-banner__title,
+.site-banner__subtitle,
+.site-banner__cta {
+    position: relative;
+    z-index: 1;
 }
 
 .site-banner__logo {

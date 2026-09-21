@@ -17,6 +17,10 @@ final readonly class BannerValidator
             $errors['logo'] = 'Загрузите изображение логотипа.';
         }
 
+        if ($input->backgroundImage === null) {
+            $errors['backgroundImage'] = 'Загрузите фоновое изображение.';
+        }
+
         if ($input->title === '') {
             $errors['title'] = 'Введите заголовок.';
         }

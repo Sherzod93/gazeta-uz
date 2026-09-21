@@ -38,6 +38,20 @@ $formAction = $itemId === null
     </div>
 
     <div class="admin-form-row">
+        <label for="background_image">Фоновое изображение</label>
+        <?php if ($input->backgroundImage !== null): ?>
+            <div class="admin-form-current-image">
+                <img src="<?= Html::encode($input->backgroundImage) ?>" alt="" width="200">
+                <span>Текущий фон. Загрузите новый файл, чтобы заменить его.</span>
+            </div>
+        <?php endif; ?>
+        <input type="file" id="background_image" name="background_image" accept="image/jpeg,image/png,image/webp,image/gif">
+        <?php if (isset($errors['backgroundImage'])): ?>
+            <div class="admin-form-error"><?= Html::encode($errors['backgroundImage']) ?></div>
+        <?php endif; ?>
+    </div>
+
+    <div class="admin-form-row">
         <label for="title">Заголовок</label>
         <input type="text" id="title" name="title" value="<?= Html::encode($input->title) ?>" required>
         <?php if (isset($errors['title'])): ?>

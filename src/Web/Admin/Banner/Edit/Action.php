@@ -49,16 +49,28 @@ final readonly class Action
         }
 
         $body = (array) $request->getParsedBody();
+        $uploadedFiles = $request->getUploadedFiles();
 
         try {
-            $logo = $this->contentImageUploader->upload($request->getUploadedFiles()['logo'] ?? null);
+            $logo = $this->contentImageUploader->upload($uploadedFiles['logo'] ?? null);
         } catch (InvalidContentImageException $e) {
             $body['logo'] = $item->logo;
+            $body['background_image'] = $item->backgroundImage;
 
             return $this->render($item->id, BannerInput::fromRequestBody($body), ['logo' => $e->getMessage()]);
         }
 
+        try {
+            $backgroundImage = $this->contentImageUploader->upload($uploadedFiles['background_image'] ?? null);
+        } catch (InvalidContentImageException $e) {
+            $body['logo'] = $logo ?? $item->logo;
+            $body['background_image'] = $item->backgroundImage;
+
+            return $this->render($item->id, BannerInput::fromRequestBody($body), ['backgroundImage' => $e->getMessage()]);
+        }
+
         $body['logo'] = $logo ?? $item->logo;
+        $body['background_image'] = $backgroundImage ?? $item->backgroundImage;
 
         $input = BannerInput::fromRequestBody($body);
         $errors = $this->bannerValidator->validate($input);
@@ -78,6 +90,7 @@ final readonly class Action
     {
         return new BannerInput(
             logo: $item->logo,
+            backgroundImage: $item->backgroundImage,
             title: $item->title,
             subtitle: $item->subtitle,
             ctaText: $item->ctaText,

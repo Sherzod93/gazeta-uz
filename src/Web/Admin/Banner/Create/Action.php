@@ -38,15 +38,26 @@ final readonly class Action
         }
 
         $body = (array) $request->getParsedBody();
+        $uploadedFiles = $request->getUploadedFiles();
 
         try {
-            $logo = $this->contentImageUploader->upload($request->getUploadedFiles()['logo'] ?? null);
+            $logo = $this->contentImageUploader->upload($uploadedFiles['logo'] ?? null);
         } catch (InvalidContentImageException $e) {
             return $this->render(BannerInput::fromRequestBody($body), ['logo' => $e->getMessage()]);
         }
 
+        try {
+            $backgroundImage = $this->contentImageUploader->upload($uploadedFiles['background_image'] ?? null);
+        } catch (InvalidContentImageException $e) {
+            return $this->render(BannerInput::fromRequestBody($body), ['backgroundImage' => $e->getMessage()]);
+        }
+
         if ($logo !== null) {
             $body['logo'] = $logo;
+        }
+
+        if ($backgroundImage !== null) {
+            $body['background_image'] = $backgroundImage;
         }
 
         $input = BannerInput::fromRequestBody($body);

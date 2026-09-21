@@ -16,7 +16,10 @@ if ($banner === null) {
     return;
 }
 ?>
-<section class="site-banner">
+<section
+    class="site-banner"
+    <?= $banner->backgroundImage !== null ? 'style="background-image:url(\'' . Html::encode($banner->backgroundImage) . '\')"' : '' ?>
+>
     <img class="site-banner__logo" src="<?= Html::encode($banner->logo) ?>" alt="<?= Html::encode($banner->title) ?>">
     <p class="site-banner__title"><?= Html::encode($banner->title) ?></p>
     <?php if ($banner->subtitle !== null): ?>

@@ -9,6 +9,7 @@ final readonly class Banner
     public function __construct(
         public int $id,
         public string $logo,
+        public ?string $backgroundImage,
         public string $title,
         public ?string $subtitle,
         public ?string $ctaText,
@@ -20,6 +21,7 @@ final readonly class Banner
         return new self(
             id: (int) $row['id'],
             logo: (string) $row['logo'],
+            backgroundImage: $row['background_image'] === null ? null : (string) $row['background_image'],
             title: (string) $row['title'],
             subtitle: $row['subtitle'] === null ? null : (string) $row['subtitle'],
             ctaText: $row['cta_text'] === null ? null : (string) $row['cta_text'],
