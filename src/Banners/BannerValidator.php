@@ -14,7 +14,7 @@ final readonly class BannerValidator
         $errors = [];
 
         if ($input->logo === '') {
-            $errors['logo'] = 'Введите текст логотипа.';
+            $errors['logo'] = 'Загрузите изображение логотипа.';
         }
 
         if ($input->title === '') {

@@ -179,9 +179,8 @@ a {
     position: absolute;
     top: 22px;
     left: 40px;
-    font-size: 15px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, .85);
+    height: 24px;
+    width: auto;
 }
 
 .site-banner__title {

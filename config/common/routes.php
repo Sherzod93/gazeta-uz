@@ -49,10 +49,6 @@ return [
             Route::get('')
                 ->action(Web\Admin\Dashboard\Action::class)
                 ->name('admin/index'),
-
-            // These literal routes must be registered before the `/{type}` catch-all routes below:
-            // this router matches by registration order rather than static-route priority, so a
-            // `/{type}` pattern registered first would otherwise swallow `/banners`, `/right-blocks`, etc.
             Route::get('/banners')
                 ->action(Web\Admin\Banner\Index\Action::class)
                 ->name('admin/banner/index'),

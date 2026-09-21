@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Web\Admin\Banner\Edit;
 
+use App\Admin\Content\ContentImageUploader;
+use App\Admin\Content\InvalidContentImageException;
 use App\Banners\Banner;
 use App\Banners\BannerInput;
 use App\Banners\BannerRepository;
@@ -24,6 +26,7 @@ final readonly class Action
         private WebViewRenderer $viewRenderer,
         private BannerRepository $bannerRepository,
         private BannerValidator $bannerValidator,
+        private ContentImageUploader $contentImageUploader,
         private CurrentRoute $currentRoute,
         private RequestProviderInterface $requestProvider,
         private NotFoundHandler $notFoundHandler,
@@ -45,7 +48,19 @@ final readonly class Action
             return $this->render($item->id, $this->toInput($item));
         }
 
-        $input = BannerInput::fromRequestBody((array) $request->getParsedBody());
+        $body = (array) $request->getParsedBody();
+
+        try {
+            $logo = $this->contentImageUploader->upload($request->getUploadedFiles()['logo'] ?? null);
+        } catch (InvalidContentImageException $e) {
+            $body['logo'] = $item->logo;
+
+            return $this->render($item->id, BannerInput::fromRequestBody($body), ['logo' => $e->getMessage()]);
+        }
+
+        $body['logo'] = $logo ?? $item->logo;
+
+        $input = BannerInput::fromRequestBody($body);
         $errors = $this->bannerValidator->validate($input);
 
         if ($errors !== []) {

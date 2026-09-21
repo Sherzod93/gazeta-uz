@@ -39,7 +39,7 @@ $this->setTitle('Баннеры');
             <?php foreach ($items as $item): ?>
                 <tr>
                     <td><?= Html::encode($item->title) ?></td>
-                    <td><?= Html::encode($item->logo) ?></td>
+                    <td><img src="<?= Html::encode($item->logo) ?>" alt="" width="60"></td>
                     <td>
                         <div class="admin-table__actions">
                             <a class="admin-btn admin-btn--ghost" href="<?= Html::encode($urlGenerator->generate('admin/banner/edit', ['id' => (string) $item->id])) ?>">Изменить</a>

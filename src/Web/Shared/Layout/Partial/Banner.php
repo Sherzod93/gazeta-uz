@@ -17,7 +17,7 @@ if ($banner === null) {
 }
 ?>
 <section class="site-banner">
-    <span class="site-banner__logo"><?= Html::encode($banner->logo) ?></span>
+    <img class="site-banner__logo" src="<?= Html::encode($banner->logo) ?>" alt="<?= Html::encode($banner->title) ?>">
     <p class="site-banner__title"><?= Html::encode($banner->title) ?></p>
     <?php if ($banner->subtitle !== null): ?>
         <p class="site-banner__subtitle"><?= Html::encode($banner->subtitle) ?></p>
